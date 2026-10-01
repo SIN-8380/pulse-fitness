@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import vm from 'node:vm';
+import {ref,computed} from 'vue';
+import {compile} from '@vue/compiler-dom';
+const source=fs.readFileSync(new URL('../src/components/StyledSelect.js',import.meta.url),'utf8');
+const context={ref,computed,onMounted(){},onUpdated(){},onUnmounted(){},nextTick:fn=>fn(),useId:()=> 'test',innerWidth:360,innerHeight:640,setTimeout,clearTimeout};
+vm.createContext(context);vm.runInContext(source.replace(/^import .*;\n/,'').replace('export default','this.component ='),context);
+compile(context.component.template);
+let events=[];const c=context.component.setup({modelValue:'rep'},{emit:(...args)=>events.push(args)});
+c.native.value={options:[{value:'rep',textContent:'Reps',disabled:false},{value:'time',textContent:'Timed',disabled:false}]};
+c.trigger.value={getBoundingClientRect:()=>({left:20,bottom:500,top:458,width:120}),focus(){}};
+c.toggle();assert.equal(c.open.value,true);assert.equal(c.label.value,'Reps');assert.equal(c.position.value.bottom,'188px');
+c.key({key:'ArrowDown',preventDefault(){}});assert.equal(c.active.value,1);c.key({key:'Enter',preventDefault(){}});assert.equal(c.open.value,false);assert.equal(events[0][0],'update:modelValue');assert.equal(events[0][1],'time');assert.equal(events[1][1].target.value,'time');
+c.toggle();c.key({key:'Escape',preventDefault(){}});assert.equal(c.open.value,false);
+console.log('PASS: custom select template, keyboard selection, change events, popup placement and dismissal.');

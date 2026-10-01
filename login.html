@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#060911"><title>Welcome · PULSE Fitness</title>
+  <meta name="description" content="Build custom workout routines, track sets and reps, and stay focused with PULSE Fitness timers and progress tracking.">
+  <meta name="author" content="L A W">
+  <meta name="application-name" content="PULSE Fitness">
+  <meta name="color-scheme" content="dark light">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="PULSE Fitness — Your pace. Your progress.">
+  <meta property="og:description" content="Personal workout routines, focused timers and progress tracking.">
+  <meta property="og:site_name" content="PULSE Fitness">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="PULSE Fitness">
+  <meta name="twitter:description" content="Build your routine. Focus on each set. Track your progress.">
+  <link rel="icon" type="image/svg+xml" href="./logo.svg">
+</head>
+<body class="bg-dark-950 text-slate-200 font-sans">
+<main id="entry" v-cloak class="entry-layout">
+  <section class="entry-intro"><a href="./login.html" class="entry-brand"><brand-logo class="w-8 h-8 text-brand-400"></brand-logo>PULSE <span>FITNESS</span></a><p class="text-brand-400 text-xs uppercase tracking-widest mt-12">Your pace. Your progress.</p><h1>Make room<br>for movement.</h1><p class="text-slate-400">Create routines, focus on each set, and watch your progress grow.</p></section>
+  <section class="entry-card glass-card"><template v-if="!editing"><p class="text-xs text-brand-400 mb-3">WELCOME BACK</p><h2 class="text-2xl font-semibold mb-2">{{profile.name}}</h2><p class="text-sm text-slate-400 mb-6">Ready for your next session?</p><button @click="enter" class="fitness-submit w-full">Continue to PULSE</button><button @click="editing=true" class="text-sm text-slate-400 mt-4 touch-target">Edit fitness setup</button></template><template v-else><p class="text-xs text-brand-400 mb-3">LET’S GET STARTED</p><h2 class="text-2xl font-semibold mb-2">Your starting point</h2><p class="text-sm text-slate-400 mb-6">A few steps to make PULSE yours.</p><fitness-form stepped :profile="profile" :settings="settings" submit-label="Save & enter PULSE" @saved="saved"></fitness-form></template></section>
+</main><script type="module" src="/src/entry.js"></script></body></html>
